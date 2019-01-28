@@ -30,17 +30,20 @@
         url: "{{ vyos_iso_url }}.asc"
         dest: "{{ vyos_iso_local }}.asc"
         status_code: 200,404,403
+        validate_certs: False
       register: gpg_uri
 
     - name: Download VyOS ISO release
       get_url:
         url: "{{ vyos_iso_url }}"
         dest: "{{ vyos_iso_local }}"
+        validate_certs: False
 
     - name: Fetch the VyOS release GPG key
       get_url:
-        url: "{{ vyos_key_url}}"
+        url: "{{ vyos_key_url }}"
         dest: "{{ vyos_key_local }}"
+        validate_certs: False
 
     - name: Install the VyOS release GPG key
       command: gpg --import {{ vyos_key_local }}
